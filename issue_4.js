@@ -9,18 +9,42 @@
 // para que se forme bien el árbol.
 
 function createXmasTree(height) {
-    let tree = '';
-    for (let i = 0; i < height; i++) {
-        let branch = '';
-        for (let j = 0; j < height - i - 1; j++) {
-            branch += ' ';
-        }
-        for (let k = 0; k < i * 2 + 1; k++) {
-            branch += '*';
-        }
-        tree += branch + '\n';
+    const SYMBOLS = {
+      EMPTY: '_',
+      LEAF: '*',
+      TRUNK: '#',
     }
-    return tree;
-}
+    const TRUNK_HEIGHT = 2
+  
+    return createTree().join('\n')
+  
+    function createTree() {
+      return [
+        ...createTreeTop(),
+        ...createTrunk()
+      ]
+    }
+  
+    function createTreeTop() {
+      const levels = [ ...Array( height ).keys() ]
+      return levels.map( level => createTreeTopLineForLevel( height - level ) )
+    }
+  
+    function createTreeTopLineForLevel( level ) {
+      const emptySpace = SYMBOLS.EMPTY.repeat( level - 1 )
+      const leavesPart = SYMBOLS.LEAF.repeat( ( height - level ) * 2 + 1 )
+      return emptySpace + leavesPart + emptySpace
+    }
+  
+    function createTrunk() {
+      const trunkLine = createTrunkLine()
+      return [ ...Array( TRUNK_HEIGHT ) ].map( () => trunkLine )
+    }
+  
+    function createTrunkLine() {
+      const emptySpace = SYMBOLS.EMPTY.repeat( height - 1 )
+      return emptySpace + SYMBOLS.TRUNK + emptySpace
+    }
+  }
 
-console.log(createXmasTree(5));
+console.log(createXmasTree(20));
