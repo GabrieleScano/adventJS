@@ -28,3 +28,5 @@ function maxProfit( prices ) {
     const maxGain = Math.max( ...prices.map( ( price, i ) => Math.max( ...prices.slice( i + 1 ) ) - price ) )
     return maxGain > 0 ? maxGain : -1
   }
+
+  console.log(maxProfit(pricesBtc))
